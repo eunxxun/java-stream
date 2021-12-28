@@ -17,12 +17,12 @@
 ### 생성작업
 - 컬렉션이나 배열 등으로부터 스트림을 생성
 1. Collection으로 생성
-```aidl
+```java
     List<String> list = List.of("test","play");
     Stream<String> stream = list.stream();
 ```
 2. Array로 생성
-```aidl
+```java
     String[] arr = new String[]{"test", "play"};
     Stream<String> stream = Arrays.stream(arr);
     
@@ -33,14 +33,14 @@
     specificStream.forEach(System.out::println);
 ```
 3. 병렬 스트림 생성
-```aidl
+```java
     List<String> list = List.of("test","play","...");
     Stream<String> stream = list.parallelStream();
 ```
 4. 기본 타입에 특화된 스트림 생성
     
     - 오토박싱과 언박싱의 비효율적 측면을 줄이기 위해 기본 타입에 특화된 스트림을 사용할 수 있다.
-```aidl
+```java
     IntStream intStream = IntStream.range(0,3); //0, 1, 2
     IntStream cloxedIntStream = IntStream.rangeClosed(0,3); //0, 1, 2, 3
     LongStream longStream = LongStream.range(0,3); //0, 1, 2
@@ -49,7 +49,7 @@
 5. 파일(Files)로 생성
 
     - list 메서드는 path 스트림을, lines 메서드는 파일 내 각 라인을 문자열 스트림으로 생성한다.
-```aidl
+```java
     Path path = Paths.get("~");
     Stream<Path> list = Files.list(path);
     
@@ -57,7 +57,7 @@
     Stream<String> lines = Files.lines(path);
 ```
 6. Stream.builder()로 생성
-```aidl
+```java
     Stream<String> stream = Stream.<String>builder()
         .add("test").add("play").build();
 ```
@@ -69,7 +69,7 @@
 1. filter 메서드로 필터링
     
     - filter 메서드의 인자인 Predicate<T> 인터페이스는 test라는 추상 메서드를 정의하는데, 이는 제네릭 형식의 객체를 인수로 받아 boolean 값을 반환한다.
-```aidl
+```java
     List<String> list = List.of("park","sssuuny");
     list.stream().filter(s -> s.length() > 5);
     // "sssuuny"
@@ -84,7 +84,7 @@
 ```
 
 2. map 메서드로 특정 형태로 변환
-```aidl
+```java
     List<String> list = List.of("test", "play");
     list.stream().map(s -> s.toUpperCase());
     // "TEST", "PLAY"
@@ -100,7 +100,7 @@
 3. flatMap 메서드로 단일 스트림 변환
 
    - flatMap 메서드는 중첩된 구조를 한단계 없애고 단일 원소 스트림으로 만들어준다.
-```aidl
+```java
     List<String> list1 = List.of("test","play");
     List<String> list2 = List.of("park","sssunny");
     
@@ -126,7 +126,7 @@
 ```
 
 4. distinct 메서드로 중복 제거
-```aidl
+```java
     IntStream stream = Arrays.stream(new int[]{1,2,2,3,3});
     
     // 1,2,3
@@ -135,7 +135,7 @@
 ```
 
 5. sorted 메서드로 정렬하기
-```aidl
+```java
     // 1,2,3
     List.of(2,1,3).stream()
         sorted();
@@ -155,12 +155,12 @@
 1. 순회(iterate)
 
    - forEach 메서드를 사용해 스트림을 순회할 수 있다.
-```aidl
+```java
    List<Integer> list = List.of(3, 2, 1, 5, 7);
    list.stream().forEach(System.out::println);
 ```
    - 병렬 스트림 사용시 순서를 보장할 수 없다. 그래서 forEachOrdered 메서드를 사용
-```aidl
+```java
    List<Integer> list = List.of(3, 1, 2);
 
    // 매 실행마다 출력 결과가 동일하지 않다.
@@ -178,7 +178,7 @@
    - 스트림을 List, Set 그리고 Map과 같은 다른 형태의 결과로 변환해준다.
    - Collectors.toList() : 작업 결과를 리스트로 반환
    - 숫자 값의 합, 평균 등 구하기
-   ```aidl
+   ```java
       // name 길이의 합 구하기
       Integer summingName = list.stream()
         .collect(Collectors.summingInt(s -> s.getName().length()));
